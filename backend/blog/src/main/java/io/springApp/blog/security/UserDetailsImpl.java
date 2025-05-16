@@ -2,10 +2,13 @@ package io.springApp.blog.security;
 
 import io.springApp.blog.model.User;
 import lombok.Getter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 @Getter
 public class UserDetailsImpl implements UserDetails {
@@ -23,8 +26,8 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     @Override
-    public Collection getAuthorities() {
-        return Collections.singletonList(() -> "ROLE_" + role);
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
     @Override
