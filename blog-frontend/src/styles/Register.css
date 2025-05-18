@@ -1,0 +1,94 @@
+/* src/styles/Register.css */
+
+/* Main Register Page Styling */
+.register-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #FFF5F7;
+    /* Soft Beige */
+    padding: 20px;
+}
+
+.register-container {
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.register-container h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #4A4A4A;
+    /* Dark Brown */
+}
+
+/* Input Fields */
+.register-container input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
+}
+
+.register-container input:focus {
+    outline: none;
+    border-color: #F56565;
+    /* Primary Orange */
+}
+
+/* Register Button */
+.register-container button {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 15px;
+    background: linear-gradient(135deg, #F56565, #F6E05E);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.register-container button:hover {
+    background: linear-gradient(135deg, #C53030, #F56565);
+    transform: scale(1.05);
+}
+
+.register-container button:active {
+    transform: scale(0.98);
+}
+
+/* Error Message */
+.error {
+    margin-top: 15px;
+    color: #C53030;
+    font-weight: bold;
+}
+
+/* Login Link */
+.login-link {
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+.login-link a {
+    color: #F56565;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.login-link a:hover {
+    color: #C53030;
+}

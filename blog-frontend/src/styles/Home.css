@@ -1,0 +1,84 @@
+/* Home Page Styling */
+.home-page {
+    text-align: center;
+    padding: 50px 20px;
+    position: relative;
+    background-color: #FFF5F7;
+    /* Soft Beige */
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-image {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Heading and Text */
+.home-page h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #4A4A4A;
+    /* Dark Brown */
+}
+
+.home-page p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    color: #4A4A4A;
+    /* Dark Brown */
+}
+
+/* Button Styles */
+.home-page a {
+    display: inline-block;
+    padding: 12px 25px;
+    margin: 0 10px;
+    background: linear-gradient(135deg, #F56565, #F6E05E);
+    /* Gradient Background */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(245, 101, 101, 0.3);
+}
+
+.home-page a:hover {
+    background: linear-gradient(135deg, #C53030, #F56565);
+    /* Darker Gradient */
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(197, 48, 48, 0.4);
+}
+
+.home-page a:active {
+    transform: scale(0.98);
+}
+
+/* Auth Links */
+.auth-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.auth-links a {
+    background: linear-gradient(135deg, #F6E05E, #F56565);
+    /* Yellow to Orange Gradient */
+    color: #4A4A4A;
+    font-weight: 600;
+}
+
+.auth-links a:hover {
+    background: linear-gradient(135deg, #F56565, #C53030);
+    /* Orange to Dark Red */
+    color: white;
+}
