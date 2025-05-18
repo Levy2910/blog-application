@@ -92,3 +92,24 @@
 .login-link a:hover {
     color: #C53030;
 }
+
+/* Bio Textarea */
+.register-container textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    resize: vertical;
+    min-height: 80px;
+    transition: border-color 0.3s;
+    font-family: inherit;
+    color: #4A4A4A;
+}
+
+.register-container textarea:focus {
+    outline: none;
+    border-color: #F56565;
+}
