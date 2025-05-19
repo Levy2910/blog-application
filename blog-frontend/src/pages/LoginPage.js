@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 
 const LoginPage = () => {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -14,22 +14,27 @@ const LoginPage = () => {
         setError("");
 
         try {
-            const response = await fetch("http://localhost:5000/api/users/login", {
+            const response = await fetch("http://localhost:8080/api/users/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ username, password }),
             });
 
-            const data = await response.json();
-            if (response.ok) {
-                localStorage.setItem("token", data.token);
-                const role = JSON.parse(atob(data.token.split('.')[1])).role;
-                navigate(role === "ADMIN" ? "/admin/dashboard" : "/dashboard");
-            } else {
-                setError(data.message || "Login failed. Please try again.");
+            if (!response.ok) {
+                const errorText = await response.text();
+                setError(errorText || "Login failed. Please try again.");
+                return;
             }
+
+            // Since the token is returned as plain text
+            const token = await response.text();
+            localStorage.setItem("token", token);
+
+            // Extract role from JWT token
+            const role = JSON.parse(atob(token.split('.')[1])).role;
+            navigate(role === "ADMIN" ? "/admin/dashboard" : "/blogs");
         } catch (err) {
             setError("Network error. Please try again later.");
         }
@@ -41,10 +46,9 @@ const LoginPage = () => {
                 <h1>Login to Your Account</h1>
                 <form onSubmit={handleLogin}>
                     <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                     <input

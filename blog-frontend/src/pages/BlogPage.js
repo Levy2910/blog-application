@@ -1,23 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const BlogPage = () => {
     const [blogs, setBlogs] = useState([]);
+    const [error, setError] = useState("");
 
     useEffect(() => {
-        // Fetch blogs from the backend API
-        axios.get('http://localhost:8080/api/blogs')
-            .then(response => {
+        const fetchBlogs = async () => {
+            try {
+                const token = localStorage.getItem("token");
+
+                const response = await axios.get("http://localhost:8080/api/blogs/display", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                console.log(response);
+
                 setBlogs(response.data);
-            })
-            .catch(error => console.error('Error fetching blogs:', error));
+            } catch (error) {
+                console.error("Error fetching blogs:", error);
+                setError("Failed to fetch blogs. Please try again.");
+            }
+        };
+
+        fetchBlogs();
     }, []);
 
     return (
         <div>
             <h1>Blog Posts</h1>
+            {error && <p className="error">{error}</p>}
             <ul>
-                {blogs.map(blog => (
+                {blogs.map((blog) => (
                     <li key={blog.id}>{blog.title}</li>
                 ))}
             </ul>
