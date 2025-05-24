@@ -29,8 +29,13 @@ const LoginPage = () => {
             }
 
             // Since the token is returned as plain text
-            const token = await response.text();
+            const authResponse = await response.json();
+            const token = authResponse.token;
+            const user = authResponse.user;
+            // Save token to localStorage
             localStorage.setItem("token", token);
+            // Optionally save user info too
+            localStorage.setItem("user", JSON.stringify(user));
 
             // Extract role from JWT token
             const role = JSON.parse(atob(token.split('.')[1])).role;

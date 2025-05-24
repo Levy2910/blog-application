@@ -1,5 +1,6 @@
 package io.springApp.blog.service;
 
+import io.springApp.blog.dto.AuthResponse;
 import io.springApp.blog.dto.LoginRequest;
 import io.springApp.blog.dto.RegisterRequest;
 import io.springApp.blog.model.User;
@@ -27,15 +28,16 @@ public class UserService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    public String loginUser(LoginRequest request) {
+    public AuthResponse loginUser(LoginRequest request) {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
             throw new BadCredentialsException("Invalid credentials");
         }
+        String token = jwtUtil.generateToken(user.getId(), user.getUsername(), user.getRole().name());
 
-        return jwtUtil.generateToken(user.getId(), user.getUsername(), user.getRole().name());
+        return new AuthResponse(token, user);
     }
 
     public User registerUser(RegisterRequest request) {

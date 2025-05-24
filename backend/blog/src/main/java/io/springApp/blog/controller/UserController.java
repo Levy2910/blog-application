@@ -1,5 +1,6 @@
 package io.springApp.blog.controller;
 
+import io.springApp.blog.dto.AuthResponse;
 import io.springApp.blog.dto.LoginRequest;
 import io.springApp.blog.dto.RegisterRequest;
 import io.springApp.blog.model.User;
@@ -19,9 +20,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        String token = userService.loginUser(loginRequest);
-        return ResponseEntity.ok(token);
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
+        AuthResponse response = userService.loginUser(loginRequest);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")

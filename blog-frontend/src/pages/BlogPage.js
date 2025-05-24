@@ -10,7 +10,7 @@ const BlogPage = () => {
             try {
                 const token = localStorage.getItem("token");
 
-                const response = await axios.get("http://localhost:8080/api/blogs/display", {
+                const response = await axios.get("http://localhost:8080/api/blogs", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
