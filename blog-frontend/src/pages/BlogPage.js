@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "../styles/Blog.css";
 
 const BlogPage = () => {
     const [blogs, setBlogs] = useState([]);
@@ -15,8 +16,6 @@ const BlogPage = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                console.log(response);
-
                 setBlogs(response.data);
             } catch (error) {
                 console.error("Error fetching blogs:", error);
@@ -28,15 +27,29 @@ const BlogPage = () => {
     }, []);
 
     return (
-        <div>
+        <div className="blog-page">
             <h1>Blog Posts</h1>
             {error && <p className="error">{error}</p>}
-            <ul>
+            <ul className="blog-list">
                 {blogs.map((blog) => (
-                    <li key={blog.id}>{blog.title}</li>
+                    <li key={blog.id} className="blog-item">
+                        <h2>{blog.title}</h2>
+                        <p>{blog.content}</p>
+                        {blog.imagePath && (
+                            <img
+                                src={`http://localhost:8080/${blog.imagePath}`}
+                                alt={blog.title}
+                            />
+                        )}
+                        <div className="blog-dates">
+                            <p><strong>Created:</strong> {new Date(blog.createdAt).toLocaleString()}</p>
+                            <p><strong>Updated:</strong> {new Date(blog.updatedAt).toLocaleString()}</p>
+                        </div>
+                    </li>
                 ))}
             </ul>
         </div>
+
     );
 };
 

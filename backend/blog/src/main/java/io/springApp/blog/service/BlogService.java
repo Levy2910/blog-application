@@ -58,7 +58,7 @@ public class BlogService {
         Path targetPath = uploadPath.resolve(filename);
         Files.copy(imageFile.getInputStream(), targetPath);
 
-        blog.setImagePath("/images/" + filename);
+        blog.setImagePath("images/" + filename);
 
         return blogRepository.save(blog);
     }

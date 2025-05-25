@@ -1,0 +1,85 @@
+/* Blog Page Styling */
+.blog-page {
+    padding: 50px 20px;
+    background-color: #FFF5F7;
+    /* Soft Beige */
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Heading */
+.blog-page h1 {
+    font-size: 2.5rem;
+    color: #4A4A4A;
+    /* Dark Brown */
+    margin-bottom: 30px;
+}
+
+/* Blog List */
+.blog-list {
+    width: 100%;
+    max-width: 900px;
+    list-style: none;
+    padding: 0;
+}
+
+.blog-item {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.blog-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Blog Title */
+.blog-item h2 {
+    font-size: 1.8rem;
+    color: #2D3748;
+    /* Slightly darker */
+    margin-bottom: 10px;
+}
+
+/* Blog Content */
+.blog-item p {
+    font-size: 1.1rem;
+    color: #4A4A4A;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Image */
+/* Blog Image Styling */
+.blog-item img {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 15px 0;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 15px auto;
+}
+
+
+
+/* Dates */
+.blog-dates {
+    font-size: 0.9rem;
+    color: #718096;
+    /* Muted Gray */
+}
+
+/* Error Message */
+.error {
+    color: #C53030;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
