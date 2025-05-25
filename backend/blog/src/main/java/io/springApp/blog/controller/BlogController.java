@@ -2,6 +2,7 @@ package io.springApp.blog.controller;
 
 import io.jsonwebtoken.io.IOException;
 import io.springApp.blog.dto.BlogRequest;
+import io.springApp.blog.dto.BlogResponse;
 import io.springApp.blog.model.Blog;
 import io.springApp.blog.service.BlogService;
 import org.springframework.http.HttpStatus;
@@ -29,14 +30,11 @@ public class BlogController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Blog>> getOneBlog(@PathVariable Long id) {
-        Optional<Blog> blog = blogService.getOneBlog(id);
-        if (blog.isPresent()) {
-            return ResponseEntity.ok(blog);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+    public ResponseEntity<BlogResponse> getBlogById(@PathVariable Long id) {
+        BlogResponse response = blogService.getOneBlog(id);
+        return ResponseEntity.ok(response);
     }
+
 
     @PostMapping(value = "/{userId}", consumes = "multipart/form-data")
     public ResponseEntity<Blog> createBlog(

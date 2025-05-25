@@ -23,6 +23,7 @@ public class User {
 
     @Id
     @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
@@ -39,7 +40,13 @@ public class User {
     private String name;
 
     @Column(length = 500)
-    private String bio;
+    private String aboutUser;  // Replaces "bio"
+
+    @Column(length = 255)
+    private String location;   // New
+
+    @Column(length = 255)
+    private String profileImage; // New
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)

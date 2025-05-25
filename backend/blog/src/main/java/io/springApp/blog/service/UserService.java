@@ -57,7 +57,7 @@ public class UserService {
                 .role(User.Role.USER) // default role
                 .emailVerified(false)
                 .name(request.getName())
-                .bio(request.getBio())
+                .aboutUser(request.getAboutUser())
                 .build();
 
         return userRepository.save(user);

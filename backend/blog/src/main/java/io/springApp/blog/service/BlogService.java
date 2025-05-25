@@ -1,6 +1,7 @@
 package io.springApp.blog.service;
 
 import io.springApp.blog.dto.BlogRequest;
+import io.springApp.blog.dto.BlogResponse;
 import io.springApp.blog.model.Blog;
 import io.springApp.blog.model.User;
 import io.springApp.blog.repository.BlogRepository;
@@ -37,9 +38,21 @@ public class BlogService {
         return blogRepository.findAll();
     }
 
-    public Optional<Blog> getOneBlog(Long id) {
-        return blogRepository.findById(id);
+    public BlogResponse getOneBlog(Long id) {
+        Blog currBlog = blogRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Blog not found with id: " + id));
+
+        BlogResponse response = new BlogResponse();
+        response.setId(currBlog.getId());
+        response.setTitle(currBlog.getTitle());
+        response.setContent(currBlog.getContent());
+        response.setImagePath(currBlog.getImagePath());
+        response.setCreatedAt(currBlog.getCreatedAt());
+        response.setUpdatedAt(currBlog.getUpdatedAt());
+
+        return response;
     }
+
 
     public Blog createBlog(UUID userId, BlogRequest blogRequest, MultipartFile imageFile) throws IOException {
         User user = userRepository.findById(userId)
@@ -49,6 +62,8 @@ public class BlogService {
         blog.setTitle(blogRequest.getTitle());
         blog.setContent(blogRequest.getContent());
         blog.setUser(user);
+        blog.setShortDescription(blogRequest.getShortDescription());
+        blog.setCategory(blogRequest.getCategory());
 
         // Ensure uploadDir is valid and not empty
         Path uploadPath = Paths.get(uploadDir);
