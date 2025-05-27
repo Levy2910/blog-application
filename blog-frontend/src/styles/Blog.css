@@ -83,3 +83,23 @@
     font-weight: bold;
     margin-bottom: 20px;
 }
+
+.blog-item {
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.blog-item h2 {
+    margin-bottom: 10px;
+}
+
+.blog-item img {
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.blog-dates {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 10px;
+}

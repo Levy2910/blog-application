@@ -34,13 +34,22 @@ const BlogPage = () => {
                 {blogs.map((blog) => (
                     <li key={blog.id} className="blog-item">
                         <h2>{blog.title}</h2>
+                        <p><strong>Category:</strong> {blog.category}</p>
+                        <p><strong>Author:</strong> {blog.userName}</p>
+                        {blog.aboutUser && <p><strong>About Author:</strong> {blog.aboutUser}</p>}
+                        <p><strong>Views:</strong> {blog.views}</p>
+                        <p><strong>Description:</strong> {blog.shortDescription}</p>
+                        <p><strong>Content:</strong></p>
                         <p>{blog.content}</p>
+
                         {blog.imagePath && (
                             <img
                                 src={`http://localhost:8080/${blog.imagePath}`}
                                 alt={blog.title}
+                                style={{ maxWidth: "100%", height: "auto" }}
                             />
                         )}
+
                         <div className="blog-dates">
                             <p><strong>Created:</strong> {new Date(blog.createdAt).toLocaleString()}</p>
                             <p><strong>Updated:</strong> {new Date(blog.updatedAt).toLocaleString()}</p>
@@ -48,6 +57,7 @@ const BlogPage = () => {
                     </li>
                 ))}
             </ul>
+
         </div>
 
     );

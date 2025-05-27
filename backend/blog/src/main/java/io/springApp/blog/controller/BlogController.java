@@ -4,6 +4,7 @@ import io.jsonwebtoken.io.IOException;
 import io.springApp.blog.dto.BlogRequest;
 import io.springApp.blog.dto.BlogResponse;
 import io.springApp.blog.model.Blog;
+import io.springApp.blog.model.enums.BlogCategory;
 import io.springApp.blog.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,6 +35,30 @@ public class BlogController {
         BlogResponse response = blogService.getOneBlog(id);
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/getMostPopularBlogs")
+    public ResponseEntity<List<BlogResponse>> getMostPopularBlog() {
+        List<BlogResponse> listOfBlogs = blogService.getMostPopularBlogs();
+        return ResponseEntity.ok(listOfBlogs);
+    }
+
+    @GetMapping("/getRandomBlogs")
+    public ResponseEntity<List<BlogResponse>> getRandomBlogs(){
+        List<BlogResponse> listOfBlogs = blogService.getRandomBlogs();
+        return ResponseEntity.ok(listOfBlogs);
+    }
+
+    @GetMapping("/category/{blogCategory}")
+    public ResponseEntity<List<BlogResponse>> getBlogsByCategory(@PathVariable String blogCategory) {
+        BlogCategory category;
+        try {
+            category = BlogCategory.valueOf(blogCategory.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+        List<BlogResponse> listOfBlogs = blogService.getBlogsByCategory(category);
+        return ResponseEntity.ok(listOfBlogs);
+    }
+
 
 
     @PostMapping(value = "/{userId}", consumes = "multipart/form-data")

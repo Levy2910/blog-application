@@ -1,5 +1,6 @@
 package io.springApp.blog.dto;
 
+import io.springApp.blog.model.enums.BlogCategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,8 @@ public class BlogResponse {
     private LocalDateTime updatedAt;
     private String userName;
     private String aboutUser;
+    private String shortDescription;
+    private BlogCategory category;
+    private int views;
 
 }

@@ -20,8 +20,10 @@ public class Blog {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, length = 1000)
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
+
 
     @Column(length = 300)
     private String shortDescription;  // 🆕 Short summary of the blog
