@@ -1,65 +1,145 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/Blog.css";
 
 const BlogPage = () => {
-    const [blogs, setBlogs] = useState([]);
+    const [randomBlogs, setRandomBlogs] = useState([]);
+    const [popularBlogs, setPopularBlogs] = useState([]);
+    const [allBlogs, setAllBlogs] = useState([]);
     const [error, setError] = useState("");
 
-    useEffect(() => {
-        const fetchBlogs = async () => {
-            try {
-                const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-                const response = await axios.get("http://localhost:8080/api/blogs", {
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const config = {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
-                });
-                setBlogs(response.data);
-            } catch (error) {
-                console.error("Error fetching blogs:", error);
-                setError("Failed to fetch blogs. Please try again.");
+                };
+
+                const [randomRes, popularRes, allRes] = await Promise.all([
+                    axios.get("http://localhost:8080/api/blogs/getRandomBlogs", config),
+                    axios.get("http://localhost:8080/api/blogs/getMostPopularBlogs", config),
+                    axios.get("http://localhost:8080/api/blogs", config),
+                ]);
+                console.log(allRes);
+
+                setRandomBlogs(randomRes.data);
+                setPopularBlogs(popularRes.data);
+                setAllBlogs(allRes.data);
+            } catch (err) {
+                console.error("Blog loading error:", err);
+                setError("Something went wrong while loading blogs.");
             }
         };
 
-        fetchBlogs();
-    }, []);
+        fetchData();
+    }, [token]);
+
+    // Preload images to help browser cache and avoid white space on fast scroll
+    useEffect(() => {
+        const preloadImages = (blogs) => {
+            blogs.forEach(blog => {
+                const img = new Image();
+                img.src = `http://localhost:8080/${blog.imagePath}`;
+            });
+        };
+
+        if (randomBlogs.length) preloadImages(randomBlogs);
+        if (popularBlogs.length) preloadImages(popularBlogs);
+        if (allBlogs.length) preloadImages(allBlogs);
+    }, [randomBlogs, popularBlogs, allBlogs]);
+
+    const hookBlog = randomBlogs[0];
+    const horizontalRandoms = randomBlogs.slice(1);
 
     return (
-        <div className="blog-page">
-            <h1>Blog Posts</h1>
+        <div className="blog-container">
             {error && <p className="error">{error}</p>}
-            <ul className="blog-list">
-                {blogs.map((blog) => (
-                    <li key={blog.id} className="blog-item">
-                        <h2>{blog.title}</h2>
-                        <p><strong>Category:</strong> {blog.category}</p>
-                        <p><strong>Author:</strong> {blog.userName}</p>
-                        {blog.aboutUser && <p><strong>About Author:</strong> {blog.aboutUser}</p>}
-                        <p><strong>Views:</strong> {blog.views}</p>
-                        <p><strong>Description:</strong> {blog.shortDescription}</p>
-                        <p><strong>Content:</strong></p>
-                        <p>{blog.content}</p>
 
-                        {blog.imagePath && (
-                            <img
-                                src={`http://localhost:8080/${blog.imagePath}`}
-                                alt={blog.title}
-                                style={{ maxWidth: "100%", height: "auto" }}
-                            />
-                        )}
-
-                        <div className="blog-dates">
-                            <p><strong>Created:</strong> {new Date(blog.createdAt).toLocaleString()}</p>
-                            <p><strong>Updated:</strong> {new Date(blog.updatedAt).toLocaleString()}</p>
-                        </div>
-                    </li>
+            {/* 1. Random Horizontal */}
+            <section className="section random-blogs-row">
+                {horizontalRandoms.map((blog) => (
+                    <div key={blog.id} className="blog-card small-card">
+                        <img
+                            src={`http://localhost:8080/${blog.imagePath}`}
+                            alt={blog.title}
+                            loading="lazy"
+                            width={200}
+                            height={120}
+                            style={{ objectFit: "cover" }}
+                        />
+                        <h4>{blog.title}</h4>
+                        <p>{blog.userName}</p>
+                    </div>
                 ))}
-            </ul>
+            </section>
 
+            {/* 2. Hook Section */}
+            {hookBlog && (
+                <section className="section hook-blog">
+                    <img
+                        src={`http://localhost:8080/${hookBlog.imagePath}`}
+                        alt={hookBlog.title}
+                        loading="eager"  // important image, load immediately
+                        width={600}
+                        height={350}
+                        style={{ objectFit: "cover" }}
+                    />
+                    <div className="hook-content">
+                        <h2>{hookBlog.title}</h2>
+                        <p>{hookBlog.shortDescription}</p>
+                        <p>By {hookBlog.userName}</p>
+                    </div>
+                </section>
+            )}
+
+            {/* 3. Popular Section */}
+            <section className="section popular-blogs">
+                <h3>Most Popular Blogs</h3>
+                {popularBlogs.map((blog) => (
+                    <div key={blog.id} className="blog-card popular-card">
+                        <img
+                            src={`http://localhost:8080/${blog.imagePath}`}
+                            alt={blog.title}
+                            loading="lazy"
+                            width={200}
+                            height={120}
+                            style={{ objectFit: "cover" }}
+                        />
+                        <div>
+                            <h5>{blog.title}</h5>
+                            <p>{blog.views} views</p>
+                        </div>
+                    </div>
+                ))}
+            </section>
+
+            {/* 4. All Blogs (Scrollable) */}
+            <section className="section scroll-blogs">
+                <h3>All Blogs</h3>
+                {allBlogs.map((blog) => (
+                    <div key={blog.id} className="blog-card full-card">
+                        <img
+                            src={`http://localhost:8080/${blog.imagePath}`}
+                            alt={blog.title}
+                            loading="lazy"
+                            width={300}
+                            height={180}
+                            style={{ objectFit: "cover" }}
+                        />
+                        <div>
+                            <h4>{blog.title}</h4>
+                            <p>{blog.shortDescription}</p>
+                            <p>By {blog.userName}</p>
+                            <p>{new Date(blog.createdAt).toLocaleDateString()}</p>
+                        </div>
+                    </div>
+                ))}
+            </section>
         </div>
-
     );
 };
 

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -35,8 +36,14 @@ public class BlogService {
         this.userRepository = userRepository;
     }
 
-    public List<Blog> getAllBlogs() {
-        return blogRepository.findAll();
+    public List<BlogResponse> getAllBlogs() {
+        List<Blog> listOfBlogs = blogRepository.findAll();
+        List<BlogResponse> responses = new ArrayList<>();
+        for (Blog blog : listOfBlogs){
+            BlogResponse response = mapToResponse(blog);
+            responses.add(response);
+        }
+        return responses;
     }
 
     public BlogResponse getOneBlog(Long id) {

@@ -39,7 +39,7 @@ const LoginPage = () => {
 
             // Extract role from JWT token
             const role = JSON.parse(atob(token.split('.')[1])).role;
-            navigate(role === "ADMIN" ? "/admin/dashboard" : "/blogs");
+            navigate(role === "ADMIN" ? "/admin/dashboard" : "/blog");
         } catch (err) {
             setError("Network error. Please try again later.");
         }

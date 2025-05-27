@@ -26,7 +26,7 @@ public class BlogController {
     }
 
     @GetMapping
-    public List<Blog> getAllBlogs(){
+    public List<BlogResponse> getAllBlogs(){
         return blogService.getAllBlogs();
     }
 
