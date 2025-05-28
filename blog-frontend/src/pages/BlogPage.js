@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";  // import useNavigate
 import "../styles/Blog.css";
+import { AuthContext } from "../context/AuthContext";
 
 const BlogPage = () => {
     const [randomBlogs, setRandomBlogs] = useState([]);
@@ -8,9 +10,18 @@ const BlogPage = () => {
     const [allBlogs, setAllBlogs] = useState([]);
     const [error, setError] = useState("");
 
-    const token = localStorage.getItem("token");
+    const { isLoggedIn } = useContext(AuthContext);
+    const navigate = useNavigate();  // get navigate function
 
     useEffect(() => {
+        if (!isLoggedIn) {
+            // Redirect user to login page if not logged in
+            navigate("/login");
+            return;
+        }
+
+        const token = localStorage.getItem("token");
+
         const fetchData = async () => {
             try {
                 const config = {
@@ -24,11 +35,11 @@ const BlogPage = () => {
                     axios.get("http://localhost:8080/api/blogs/getMostPopularBlogs", config),
                     axios.get("http://localhost:8080/api/blogs", config),
                 ]);
-                console.log(allRes);
 
                 setRandomBlogs(randomRes.data);
                 setPopularBlogs(popularRes.data);
                 setAllBlogs(allRes.data);
+                setError("");
             } catch (err) {
                 console.error("Blog loading error:", err);
                 setError("Something went wrong while loading blogs.");
@@ -36,12 +47,12 @@ const BlogPage = () => {
         };
 
         fetchData();
-    }, [token]);
+    }, [isLoggedIn, navigate]);  // include navigate in deps
 
     // Preload images to help browser cache and avoid white space on fast scroll
     useEffect(() => {
         const preloadImages = (blogs) => {
-            blogs.forEach(blog => {
+            blogs.forEach((blog) => {
                 const img = new Image();
                 img.src = `http://localhost:8080/${blog.imagePath}`;
             });
@@ -83,7 +94,7 @@ const BlogPage = () => {
                     <img
                         src={`http://localhost:8080/${hookBlog.imagePath}`}
                         alt={hookBlog.title}
-                        loading="eager"  // important image, load immediately
+                        loading="eager" // important image, load immediately
                         width={600}
                         height={350}
                         style={{ objectFit: "cover" }}

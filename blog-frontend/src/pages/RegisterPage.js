@@ -6,7 +6,7 @@ import "../styles/Register.css";
 const RegisterPage = () => {
     const [username, setUsername] = useState("");
     const [name, setName] = useState("");
-    const [bio, setBio] = useState("");
+    const [shortDescription, setshortDescription] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -28,7 +28,7 @@ const RegisterPage = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ username, email, password, name, bio }),
+                body: JSON.stringify({ username, email, password, name, shortDescription }),
             });
 
             const data = await response.json();
@@ -73,9 +73,9 @@ const RegisterPage = () => {
                         required
                     />
                     <textarea
-                        placeholder="Bio"
-                        value={bio}
-                        onChange={(e) => setBio(e.target.value)}
+                        placeholder="Short Description"
+                        value={shortDescription}
+                        onChange={(e) => setshortDescription(e.target.value)}
                         rows={3}
                     />
                     <input

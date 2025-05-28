@@ -74,3 +74,23 @@
         margin-top: 12px;
     }
 }
+
+.logout-btn {
+    background-color: #d6336c;
+    /* match your logo color */
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 12px;
+    /* space between profile name and button */
+    font-weight: 600;
+}
+
+.logout-btn:hover {
+    background-color: #a82a54;
+    /* darker shade on hover */
+}
