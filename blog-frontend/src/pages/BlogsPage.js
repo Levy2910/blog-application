@@ -1,21 +1,20 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";  // import useNavigate
+import { useNavigate } from "react-router-dom";
 import "../styles/Blog.css";
 import { AuthContext } from "../context/AuthContext";
 
-const BlogPage = () => {
+const BlogsPage = () => {
     const [randomBlogs, setRandomBlogs] = useState([]);
     const [popularBlogs, setPopularBlogs] = useState([]);
     const [allBlogs, setAllBlogs] = useState([]);
     const [error, setError] = useState("");
 
     const { isLoggedIn } = useContext(AuthContext);
-    const navigate = useNavigate();  // get navigate function
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!isLoggedIn) {
-            // Redirect user to login page if not logged in
             navigate("/login");
             return;
         }
@@ -47,9 +46,8 @@ const BlogPage = () => {
         };
 
         fetchData();
-    }, [isLoggedIn, navigate]);  // include navigate in deps
+    }, [isLoggedIn, navigate]);
 
-    // Preload images to help browser cache and avoid white space on fast scroll
     useEffect(() => {
         const preloadImages = (blogs) => {
             blogs.forEach((blog) => {
@@ -66,6 +64,10 @@ const BlogPage = () => {
     const hookBlog = randomBlogs[0];
     const horizontalRandoms = randomBlogs.slice(1);
 
+    const handleBlogClick = (blogId) => {
+        navigate(`/singleBlog/${blogId}`);
+    };
+
     return (
         <div className="blog-container">
             {error && <p className="error">{error}</p>}
@@ -73,7 +75,12 @@ const BlogPage = () => {
             {/* 1. Random Horizontal */}
             <section className="section random-blogs-row">
                 {horizontalRandoms.map((blog) => (
-                    <div key={blog.id} className="blog-card small-card">
+                    <div
+                        key={blog.id}
+                        className="blog-card small-card"
+                        onClick={() => handleBlogClick(blog.id)}
+                        style={{ cursor: "pointer" }}
+                    >
                         <img
                             src={`http://localhost:8080/${blog.imagePath}`}
                             alt={blog.title}
@@ -90,11 +97,15 @@ const BlogPage = () => {
 
             {/* 2. Hook Section */}
             {hookBlog && (
-                <section className="section hook-blog">
+                <section
+                    className="section hook-blog"
+                    onClick={() => handleBlogClick(hookBlog.id)}
+                    style={{ cursor: "pointer" }}
+                >
                     <img
                         src={`http://localhost:8080/${hookBlog.imagePath}`}
                         alt={hookBlog.title}
-                        loading="eager" // important image, load immediately
+                        loading="eager"
                         width={600}
                         height={350}
                         style={{ objectFit: "cover" }}
@@ -111,7 +122,12 @@ const BlogPage = () => {
             <section className="section popular-blogs">
                 <h3>Most Popular Blogs</h3>
                 {popularBlogs.map((blog) => (
-                    <div key={blog.id} className="blog-card popular-card">
+                    <div
+                        key={blog.id}
+                        className="blog-card popular-card"
+                        onClick={() => handleBlogClick(blog.id)}
+                        style={{ cursor: "pointer" }}
+                    >
                         <img
                             src={`http://localhost:8080/${blog.imagePath}`}
                             alt={blog.title}
@@ -128,11 +144,16 @@ const BlogPage = () => {
                 ))}
             </section>
 
-            {/* 4. All Blogs (Scrollable) */}
+            {/* 4. All Blogs */}
             <section className="section scroll-blogs">
                 <h3>All Blogs</h3>
                 {allBlogs.map((blog) => (
-                    <div key={blog.id} className="blog-card full-card">
+                    <div
+                        key={blog.id}
+                        className="blog-card full-card"
+                        onClick={() => handleBlogClick(blog.id)}
+                        style={{ cursor: "pointer" }}
+                    >
                         <img
                             src={`http://localhost:8080/${blog.imagePath}`}
                             alt={blog.title}
@@ -154,4 +175,4 @@ const BlogPage = () => {
     );
 };
 
-export default BlogPage;
+export default BlogsPage;

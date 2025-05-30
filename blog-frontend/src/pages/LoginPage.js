@@ -38,7 +38,7 @@ const LoginPage = () => {
 
             // Let AuthContext handle decoding, but navigate based on decoded role
             const { role } = JSON.parse(atob(token.split(".")[1]));
-            navigate(role === "ADMIN" ? "/admin/dashboard" : "/blog");
+            navigate(role === "ADMIN" ? "/admin/dashboard" : "/blogs");
         } catch (err) {
             setError("Network error. Please try again later.");
         } finally {
