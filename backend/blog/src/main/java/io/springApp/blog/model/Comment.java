@@ -16,12 +16,20 @@ public class Comment {
 
     private String content;
 
-    private String authorName;
+    private LocalDateTime postedAt;
 
-    private LocalDateTime postedAt = LocalDateTime.now();
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "blog_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "blog_id", nullable = false)
     @JsonBackReference
     private Blog blog;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
+
+    @PrePersist
+    protected void onCreate() {
+        postedAt = LocalDateTime.now();
+    }
 }
