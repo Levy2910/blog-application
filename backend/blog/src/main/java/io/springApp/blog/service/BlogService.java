@@ -78,7 +78,7 @@ public class BlogService {
     }
 
     public List<BlogResponse> getMostPopularBlogs() {
-        List<Blog> popularBlogs = blogRepository.findTop10ByOrderByViewsDesc(); 
+        List<Blog> popularBlogs = blogRepository.findTop5ByOrderByViewsDesc();
         return popularBlogs.stream()
                 .map(this::mapToResponse)
                 .toList();
@@ -117,4 +117,8 @@ public class BlogService {
                 .toList();
     }
 
+    public List<BlogResponse> getBlogsByUserId(UUID userId) {
+       List<Blog> blogs =  blogRepository.findByUserId(userId);
+                return blogs.stream().map(this::mapToResponse).toList();
+    }
 }

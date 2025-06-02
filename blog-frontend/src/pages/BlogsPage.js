@@ -5,9 +5,9 @@ import "../styles/Blog.css";
 import { AuthContext } from "../context/AuthContext";
 
 const BlogsPage = () => {
-    const [randomBlogs, setRandomBlogs] = useState([]);
+    const [userBlogs, setUserBlogs] = useState([]);
     const [popularBlogs, setPopularBlogs] = useState([]);
-    const [allBlogs, setAllBlogs] = useState([]);
+    const [hookBlog, setHookBlog] = useState(null);
     const [error, setError] = useState("");
 
     const { isLoggedIn } = useContext(AuthContext);
@@ -20,6 +20,15 @@ const BlogsPage = () => {
         }
 
         const token = localStorage.getItem("token");
+        const storedUser = localStorage.getItem("user");
+        const user = storedUser ? JSON.parse(storedUser) : null;
+
+        if (!user?.id) {
+            alert("User not found in localStorage.");
+            return;
+        }
+
+        const userId = user.id;
 
         const fetchData = async () => {
             try {
@@ -29,15 +38,15 @@ const BlogsPage = () => {
                     },
                 };
 
-                const [randomRes, popularRes, allRes] = await Promise.all([
-                    axios.get("http://localhost:8080/api/blogs/getRandomBlogs", config),
+                const [userRes, popularRes, hookRes] = await Promise.all([
+                    axios.get(`http://localhost:8080/api/blogs/getBlogByUser/${userId}`, config),
                     axios.get("http://localhost:8080/api/blogs/getMostPopularBlogs", config),
-                    axios.get("http://localhost:8080/api/blogs", config),
+                    axios.get("http://localhost:8080/api/blogs/getRandomBlogs", config),
                 ]);
 
-                setRandomBlogs(randomRes.data);
+                setUserBlogs(userRes.data);
                 setPopularBlogs(popularRes.data);
-                setAllBlogs(allRes.data);
+                setHookBlog(hookRes.data[0] || null);
                 setError("");
             } catch (err) {
                 console.error("Blog loading error:", err);
@@ -48,22 +57,6 @@ const BlogsPage = () => {
         fetchData();
     }, [isLoggedIn, navigate]);
 
-    useEffect(() => {
-        const preloadImages = (blogs) => {
-            blogs.forEach((blog) => {
-                const img = new Image();
-                img.src = `http://localhost:8080/${blog.imagePath}`;
-            });
-        };
-
-        if (randomBlogs.length) preloadImages(randomBlogs);
-        if (popularBlogs.length) preloadImages(popularBlogs);
-        if (allBlogs.length) preloadImages(allBlogs);
-    }, [randomBlogs, popularBlogs, allBlogs]);
-
-    const hookBlog = randomBlogs[0];
-    const horizontalRandoms = randomBlogs.slice(1);
-
     const handleBlogClick = (blogId) => {
         navigate(`/singleBlog/${blogId}`);
     };
@@ -72,30 +65,40 @@ const BlogsPage = () => {
         <div className="blog-container">
             {error && <p className="error">{error}</p>}
 
-            {/* 1. Random Horizontal */}
-            <section className="section random-blogs-row">
-                {horizontalRandoms.map((blog) => (
-                    <div
-                        key={blog.id}
-                        className="blog-card small-card"
-                        onClick={() => handleBlogClick(blog.id)}
-                        style={{ cursor: "pointer" }}
-                    >
-                        <img
-                            src={`http://localhost:8080/${blog.imagePath}`}
-                            alt={blog.title}
-                            loading="lazy"
-                            width={200}
-                            height={120}
-                            style={{ objectFit: "cover" }}
-                        />
-                        <h4>{blog.title}</h4>
-                        <p>{blog.userName}</p>
+            {/* 1. User's Blogs */}
+            <section className="section user-blogs">
+                <h3>Your Blogs</h3>
+                {userBlogs.length > 0 ? (
+                    <div className="blogs-row">
+                        {userBlogs.map((blog) => (
+                            <div
+                                key={blog.id}
+                                className="blog-card small-card"
+                                onClick={() => handleBlogClick(blog.id)}
+                                style={{ cursor: "pointer" }}
+                            >
+                                <img
+                                    src={`http://localhost:8080/${blog.imagePath}`}
+                                    alt={blog.title}
+                                    loading="lazy"
+                                    width={200}
+                                    height={120}
+                                    style={{ objectFit: "cover" }}
+                                />
+                                <h4>{blog.title}</h4>
+                                <p>{blog.userName}</p>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                ) : (
+                    <div className="no-blogs">
+                        <p>Write some more blogs</p>
+                    </div>
+                )}
+                <button onClick={() => navigate("/createBlog")}>Create Blog</button>
             </section>
 
-            {/* 2. Hook Section */}
+            {/* 2. Hook Blog */}
             {hookBlog && (
                 <section
                     className="section hook-blog"
@@ -118,59 +121,30 @@ const BlogsPage = () => {
                 </section>
             )}
 
-            {/* 3. Popular Section */}
+            {/* 3. Popular Blogs */}
             <section className="section popular-blogs">
                 <h3>Most Popular Blogs</h3>
-                {popularBlogs.map((blog) => (
-                    <div
-                        key={blog.id}
-                        className="blog-card popular-card"
-                        onClick={() => handleBlogClick(blog.id)}
-                        style={{ cursor: "pointer" }}
-                    >
-                        <img
-                            src={`http://localhost:8080/${blog.imagePath}`}
-                            alt={blog.title}
-                            loading="lazy"
-                            width={200}
-                            height={120}
-                            style={{ objectFit: "cover" }}
-                        />
-                        <div>
-                            <h5>{blog.title}</h5>
-                            <p>{blog.views} views</p>
+                <div className="blog-row">
+                    {popularBlogs.map((blog) => (
+                        <div
+                            key={blog.id}
+                            className="blog-card popular-card"
+                            onClick={() => handleBlogClick(blog.id)}
+                        >
+                            <img
+                                src={`http://localhost:8080/${blog.imagePath}`}
+                                alt={blog.title}
+                                loading="lazy"
+                            />
+                            <div>
+                                <h5>{blog.title}</h5>
+                                <p>{blog.views} views</p>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </section>
 
-            {/* 4. All Blogs */}
-            <section className="section scroll-blogs">
-                <h3>All Blogs</h3>
-                {allBlogs.map((blog) => (
-                    <div
-                        key={blog.id}
-                        className="blog-card full-card"
-                        onClick={() => handleBlogClick(blog.id)}
-                        style={{ cursor: "pointer" }}
-                    >
-                        <img
-                            src={`http://localhost:8080/${blog.imagePath}`}
-                            alt={blog.title}
-                            loading="lazy"
-                            width={300}
-                            height={180}
-                            style={{ objectFit: "cover" }}
-                        />
-                        <div>
-                            <h4>{blog.title}</h4>
-                            <p>{blog.shortDescription}</p>
-                            <p>By {blog.userName}</p>
-                            <p>{new Date(blog.createdAt).toLocaleDateString()}</p>
-                        </div>
-                    </div>
-                ))}
-            </section>
         </div>
     );
 };

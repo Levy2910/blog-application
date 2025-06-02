@@ -47,13 +47,10 @@ const CreateBlog = () => {
             category
         };
 
-        // ✅ Correct: wrap the JSON string in a Blob (as an array of string)
         const blogBlob = new Blob([JSON.stringify(blog)], { type: "application/json" });
 
-        // ✅ Append blog as JSON Blob
         formData.append("blog", blogBlob);
 
-        // ✅ Append the image file
         formData.append("image", image);
 
         try {

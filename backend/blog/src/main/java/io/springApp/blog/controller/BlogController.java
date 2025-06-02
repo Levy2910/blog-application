@@ -30,6 +30,13 @@ public class BlogController {
         return blogService.getAllBlogs();
     }
 
+    @GetMapping("/getBlogByUser/{userId}")
+    public ResponseEntity<List<BlogResponse>> getBlogsByUser(@PathVariable UUID userId) {
+        List<BlogResponse> blogs = blogService.getBlogsByUserId(userId);
+        return ResponseEntity.ok(blogs);
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<BlogResponse> getBlogById(@PathVariable Long id) {
         BlogResponse response = blogService.getOneBlog(id);
