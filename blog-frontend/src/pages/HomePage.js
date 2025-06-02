@@ -32,7 +32,7 @@ const HomePage = () => {
             />
             <h1>Welcome to the Blog</h1>
             <p>Check out our latest posts!</p>
-            <Link to="/blog">Go to Blog</Link>
+            <Link to="/blogs">Go to Blog</Link>
             <div className="auth-links">
                 {!role ? (
                     <>

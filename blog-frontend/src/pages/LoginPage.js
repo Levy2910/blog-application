@@ -32,8 +32,10 @@ const LoginPage = () => {
                 return;
             }
 
-            const { token } = await response.json();
+            const { token, user } = await response.json();
             localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+
             setIsLoggedIn(true); // This will trigger the decoding and role management in AuthContext
 
             // Let AuthContext handle decoding, but navigate based on decoded role

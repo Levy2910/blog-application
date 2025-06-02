@@ -8,6 +8,8 @@ const SingleBlog = () => {
     const { id } = useParams();
     const [blog, setBlog] = useState(null);
     const { isLoggedIn } = useContext(AuthContext);
+    const [comments, setComments] = useState([]);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,7 +36,23 @@ const SingleBlog = () => {
         };
 
         fetchBlog();
+
+        const fetchComments = async () => {
+            try {
+                const res = await axios.get(`http://localhost:8080/api/comments/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setComments(res.data);
+            } catch (err) {
+                console.error("Error fetching comments:", err);
+            }
+        };
+        fetchComments();
+
     }, [id, isLoggedIn, navigate]);
+
+
+
 
     if (!blog) return <p>Loading blog...</p>;
 
@@ -57,6 +75,23 @@ const SingleBlog = () => {
             <div className="single-blog-user">
                 <h3>About the Author</h3>
                 <p>{blog.aboutUser}</p>
+            </div>
+            <div className="comments">
+                <h3>Comments</h3>
+                {comments.length === 0 ? (
+                    <p>No comments yet.</p>
+                ) : (
+                    comments.map((comment) => (
+                        <div key={comment.commentID} className="comment">
+                            <div className="comment-header">
+                                <img src={`http://localhost:8080/${comment.userProfileImage}`} alt="profile" className="comment-avatar" />
+                                <strong>{comment.userName}</strong>
+                                <span className="comment-time">{comment.createdAt}</span>
+                            </div>
+                            <p className="comment-content">{comment.content}</p>
+                        </div>
+                    ))
+                )}
             </div>
         </div>
     );

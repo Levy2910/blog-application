@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/comments")
 public class CommentController {
     private CommentService commentService;
 
@@ -19,13 +19,13 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/{blogId}/comments")
+    @GetMapping("/{blogId}")
     public ResponseEntity<List<CommentResponse>> getAllCommentsForABlog(@PathVariable Long blogId) {
         List<CommentResponse> comments = commentService.getCommentsByBlogId(blogId);
         return ResponseEntity.ok(comments);
     }
 
-    @PostMapping("{blogId}/comments")
+    @PostMapping("{blogId}")
     public ResponseEntity<CommentResponse> saveOneCommentToABlog(
             @PathVariable Long blogId,
             @RequestBody CommentRequest commentRequest) {

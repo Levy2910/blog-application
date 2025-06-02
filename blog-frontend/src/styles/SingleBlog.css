@@ -57,3 +57,34 @@
     margin-top: 0;
     color: #2b5dab;
 }
+
+.comments {
+    margin-top: 50px;
+}
+
+.comment {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.comment-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.comment-time {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.comment-content {
+    margin-top: 0.5rem;
+}

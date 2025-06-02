@@ -12,7 +12,8 @@ const Navbar = () => {
             <div className="navbar-left">
                 <Link to="/" className="navbar-logo">WriteYours</Link>
                 <div className="navbar-links">
-                    <Link to="/blog">Blogs</Link>
+                    <Link to="/blogs">Blogs</Link>
+                    <Link to="/createBlog">Create A Blog</Link>
                     {!isLoggedIn && <>
                         <Link to="/login">Login</Link>
                         <Link to="/register">Register</Link>
