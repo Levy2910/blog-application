@@ -9,6 +9,7 @@ import Navbar from './components/Navbar'; // <- Import Navbar
 import SingleBlog from './pages/SingleBlog';
 import CreateBlog from './pages/CreateBlog';
 import './App.css';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/createBlog" element={<CreateBlog />} />
         </Routes>
       </div>
+      <Footer />
     </Router>
   );
 }

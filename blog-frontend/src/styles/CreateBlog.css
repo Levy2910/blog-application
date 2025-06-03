@@ -2,21 +2,23 @@
     max-width: 700px;
     margin: 5em auto;
     padding: 30px 25px;
-    background-color: #FFF5F7;
-    /* Soft beige like homepage */
+    background-color: #EEEEEE;
+    /* soft neutral */
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(245, 101, 101, 0.15);
+    box-shadow: 0 4px 16px rgba(42, 71, 89, 0.15);
+    /* subtle dark blue shadow */
     font-family: 'Poppins', sans-serif;
-    color: #4A4A4A;
-    /* Dark brown text */
-    border: 1.5px solid #F56565;
-    /* subtle border with warm red */
+    color: #333446;
+    /* dark slate blue text */
+    border: 1.5px solid #B6B09F;
+    /* soft earthy beige border */
 }
 
 .create-blog-container h2 {
     text-align: center;
     margin-bottom: 30px;
-    color: #4A4A4A;
+    color: #333446;
+    /* dark slate blue */
     font-weight: 700;
     letter-spacing: 0.05em;
 }
@@ -29,7 +31,8 @@ form {
 
 label {
     font-weight: 600;
-    color: #4A4A4A;
+    color: #333446;
+    /* dark slate blue */
     margin-bottom: 6px;
 }
 
@@ -38,24 +41,27 @@ textarea,
 select,
 input[type="file"] {
     padding: 12px 15px;
-    border: 1.8px solid #F56565;
-    /* warm red border */
+    border: 1.8px solid #B6B09F;
+    /* soft earthy beige border */
     border-radius: 8px;
     font-size: 1rem;
-    background-color: white;
-    color: #4A4A4A;
+    background-color: #F2F2F2;
+    /* off-white background */
+    color: #333446;
+    /* dark slate blue text */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: inset 1px 1px 4px rgba(245, 101, 101, 0.1);
+    box-shadow: inset 1px 1px 4px rgba(42, 71, 89, 0.1);
+    /* subtle dark blue inset shadow */
 }
 
 input[type="text"]:focus,
 textarea:focus,
 select:focus,
 input[type="file"]:focus {
-    border-color: #F6E05E;
-    /* bright yellow on focus */
+    border-color: #7F8CAA;
+    /* medium muted blue on focus */
     outline: none;
-    box-shadow: 0 0 6px #F6E05E;
+    box-shadow: 0 0 6px #7F8CAA;
 }
 
 textarea {
@@ -65,8 +71,10 @@ textarea {
 }
 
 button[type="submit"] {
-    background: linear-gradient(135deg, #F56565, #F6E05E);
-    color: white;
+    background: linear-gradient(135deg, #2A4759, #B6B09F);
+    /* dark blue to soft beige */
+    color: #F2F2F2;
+    /* off-white text */
     padding: 14px 0;
     font-size: 1.2rem;
     font-weight: 700;
@@ -74,11 +82,12 @@ button[type="submit"] {
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 10px rgba(245, 101, 101, 0.3);
+    box-shadow: 0 4px 10px rgba(42, 71, 89, 0.3);
 }
 
 button[type="submit"]:hover {
-    background: linear-gradient(135deg, #C53030, #F56565);
+    background: linear-gradient(135deg, #333446, #7F8CAA);
+    /* darker slate blue to medium blue */
     transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(197, 48, 48, 0.4);
+    box-shadow: 0 6px 15px rgba(51, 52, 70, 0.4);
 }

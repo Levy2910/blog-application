@@ -65,9 +65,10 @@ const BlogsPage = () => {
         <div className="blog-container">
             {error && <p className="error">{error}</p>}
 
-            {/* 1. User's Blogs */}
             <section className="section user-blogs">
                 <h3>Your Blogs</h3>
+                <p className="section-intro">These are blogs you've written. Keep your readers engaged—share something new!</p>
+
                 {userBlogs.length > 0 ? (
                     <div className="blogs-row">
                         {userBlogs.map((blog) => (
@@ -75,16 +76,8 @@ const BlogsPage = () => {
                                 key={blog.id}
                                 className="blog-card small-card"
                                 onClick={() => handleBlogClick(blog.id)}
-                                style={{ cursor: "pointer" }}
                             >
-                                <img
-                                    src={`http://localhost:8080/${blog.imagePath}`}
-                                    alt={blog.title}
-                                    loading="lazy"
-                                    width={200}
-                                    height={120}
-                                    style={{ objectFit: "cover" }}
-                                />
+                                <img src={`http://localhost:8080/${blog.imagePath}`} alt={blog.title} />
                                 <h4>{blog.title}</h4>
                                 <p>{blog.userName}</p>
                             </div>
@@ -92,27 +85,21 @@ const BlogsPage = () => {
                     </div>
                 ) : (
                     <div className="no-blogs">
-                        <p>Write some more blogs</p>
+                        <p>You haven't written any blogs yet.</p>
                     </div>
                 )}
-                <button onClick={() => navigate("/createBlog")}>Create Blog</button>
+
+                <div className="create-blog-wrapper">
+                    <button className="create-blog-btn" onClick={() => navigate("/createBlog")}>
+                        + Write a New Blog
+                    </button>
+                </div>
             </section>
 
-            {/* 2. Hook Blog */}
             {hookBlog && (
-                <section
-                    className="section hook-blog"
-                    onClick={() => handleBlogClick(hookBlog.id)}
-                    style={{ cursor: "pointer" }}
-                >
-                    <img
-                        src={`http://localhost:8080/${hookBlog.imagePath}`}
-                        alt={hookBlog.title}
-                        loading="eager"
-                        width={600}
-                        height={350}
-                        style={{ objectFit: "cover" }}
-                    />
+                <section className="section hook-blog" onClick={() => handleBlogClick(hookBlog.id)}>
+                    <p className="section-intro">Featured blog picked just for you!</p>
+                    <img src={`http://localhost:8080/${hookBlog.imagePath}`} alt={hookBlog.title} />
                     <div className="hook-content">
                         <h2>{hookBlog.title}</h2>
                         <p>{hookBlog.shortDescription}</p>
@@ -121,21 +108,13 @@ const BlogsPage = () => {
                 </section>
             )}
 
-            {/* 3. Popular Blogs */}
             <section className="section popular-blogs">
                 <h3>Most Popular Blogs</h3>
+                <p className="section-intro">Check out what others are reading the most.</p>
                 <div className="blog-row">
                     {popularBlogs.map((blog) => (
-                        <div
-                            key={blog.id}
-                            className="blog-card popular-card"
-                            onClick={() => handleBlogClick(blog.id)}
-                        >
-                            <img
-                                src={`http://localhost:8080/${blog.imagePath}`}
-                                alt={blog.title}
-                                loading="lazy"
-                            />
+                        <div key={blog.id} className="blog-card popular-card" onClick={() => handleBlogClick(blog.id)}>
+                            <img src={`http://localhost:8080/${blog.imagePath}`} alt={blog.title} />
                             <div>
                                 <h5>{blog.title}</h5>
                                 <p>{blog.views} views</p>
@@ -144,6 +123,7 @@ const BlogsPage = () => {
                     ))}
                 </div>
             </section>
+
 
         </div>
     );

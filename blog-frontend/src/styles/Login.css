@@ -6,17 +6,18 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #FFF5F7;
-    /* Soft Beige */
+    background-color: #EEEEEE;
+    /* soft light neutral */
     padding: 20px;
 }
 
 .login-container {
-    background-color: white;
+    background-color: #F2F2F2;
+    /* off-white background */
     padding: 40px 30px;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    max-width: 400px;
+    max-width: 50vw;
     width: 100%;
     text-align: center;
 }
@@ -24,8 +25,8 @@
 .login-container h1 {
     margin-bottom: 20px;
     font-size: 2rem;
-    color: #4A4A4A;
-    /* Dark Brown */
+    color: #333446;
+    /* dark slate blue */
 }
 
 /* Input Fields */
@@ -33,17 +34,19 @@
     width: 100%;
     padding: 12px 15px;
     margin: 10px 0;
-    border: 2px solid #ddd;
+    border: 2px solid #DDDDDD;
+    /* light grey border */
     border-radius: 8px;
     font-size: 1rem;
-    background-color: #f9f9f9;
+    background-color: #EEEEEE;
+    /* subtle pale background */
     transition: border-color 0.3s;
 }
 
 .login-container input:focus {
     outline: none;
-    border-color: #F56565;
-    /* Primary Orange */
+    border-color: #F79B72;
+    /* warm coral */
 }
 
 /* Login Button */
@@ -51,17 +54,20 @@
     width: 100%;
     padding: 12px 15px;
     margin-top: 15px;
-    background: linear-gradient(135deg, #F56565, #F6E05E);
+    background: linear-gradient(135deg, #F79B72, #2A4759);
+    /* coral to deep blue-green */
     border: none;
     border-radius: 8px;
-    color: white;
+    color: #F2F2F2;
+    /* off-white text */
     font-weight: bold;
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
 }
 
 .login-container button:hover {
-    background: linear-gradient(135deg, #C53030, #F56565);
+    background: linear-gradient(135deg, #B6B09F, #333446);
+    /* warm beige to dark slate */
     transform: scale(1.05);
 }
 
@@ -72,7 +78,8 @@
 /* Error Message */
 .error {
     margin-top: 15px;
-    color: #C53030;
+    color: #F79B72;
+    /* warm coral */
     font-weight: bold;
 }
 
@@ -83,12 +90,14 @@
 }
 
 .register-link a {
-    color: #F56565;
+    color: #2A4759;
+    /* deep blue-green */
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s;
 }
 
 .register-link a:hover {
-    color: #C53030;
+    color: #F79B72;
+    /* coral */
 }

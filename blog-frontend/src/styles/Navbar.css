@@ -2,16 +2,19 @@
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #ffe6e6;
+    background-color: #EAEFEF;
+    /* soft light blue-gray */
     padding: 16px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(51, 52, 70, 0.1);
+    /* subtle shadow using #333446 */
     z-index: 1000;
     font-family: 'Segoe UI', sans-serif;
 }
 
+/* Left side (logo + links) */
 .navbar-left {
     display: flex;
     align-items: center;
@@ -20,7 +23,8 @@
 .navbar-logo {
     font-size: 24px;
     font-weight: bold;
-    color: #d6336c;
+    color: #2A4759;
+    /* deep blue-green */
     text-decoration: none;
     margin-right: 40px;
 }
@@ -31,24 +35,29 @@
 }
 
 .navbar-links a {
-    color: #333;
+    color: #333446;
+    /* dark navy */
     text-decoration: none;
     font-size: 17px;
     padding: 6px 10px;
     border-radius: 5px;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .navbar-links a:hover {
-    background-color: #ffd6d6;
-    color: #000;
+    background-color: #B6B09F;
+    /* warm beige */
+    color: #333446;
+    /* keep dark navy for contrast */
 }
 
+/* Right side (profile + logout) */
 .navbar-profile {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #444;
+    color: #333446;
+    /* dark navy */
     cursor: pointer;
     font-size: 16px;
 }
@@ -57,6 +66,7 @@
     font-weight: 500;
 }
 
+/* Responsive behavior */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -75,10 +85,12 @@
     }
 }
 
+/* Logout Button */
 .logout-btn {
-    background-color: #d6336c;
-    /* match your logo color */
-    color: white;
+    background-color: #2A4759;
+    /* deep blue-green */
+    color: #F2F2F2;
+    /* soft off-white */
     border: none;
     padding: 6px 14px;
     border-radius: 20px;
@@ -86,11 +98,10 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-left: 12px;
-    /* space between profile name and button */
     font-weight: 600;
 }
 
 .logout-btn:hover {
-    background-color: #a82a54;
-    /* darker shade on hover */
+    background-color: #333446;
+    /* dark navy */
 }
