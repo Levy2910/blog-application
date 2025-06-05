@@ -110,7 +110,7 @@ const SingleBlog = () => {
                     comments.map((comment) => (
                         <div key={comment.commentID} className="comment">
                             <div className="comment-header">
-                                <img src={`http://localhost:8080/${comment.userProfileImage}`} alt="profile" className="comment-avatar" />
+                                <img src={"https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8"} alt="profile" className="comment-avatar" />
                                 <strong>{comment.userName}</strong>
                                 <span className="comment-time">{comment.createdAt}</span>
                             </div>
