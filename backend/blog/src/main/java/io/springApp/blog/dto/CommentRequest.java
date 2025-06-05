@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class CommentRequest {
     private String content;
     private String userName;
-    private String userProfileImage;
 }
